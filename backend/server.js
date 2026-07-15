@@ -1,16 +1,36 @@
 const express = require("express");
-
 require("dotenv").config();
+
+const initializeSystem = require("./src/startup/initializeSystem");
 
 const app = express();
 
 app.use(express.json());
 
+const PORT = process.env.PORT || 3000;
 
-const PORT = process.env.PORT || 3000; //Assim, o servidor usa a porta definida no ambiente e, se não existir, utiliza 3000.
+// Inicializa o servidor
+async function startServer() {
 
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-});
+    try {
 
-//console.log(process.env.DB_USER);
+        // Inicializa o sistema
+        await initializeSystem();
+
+        // Inicia o servidor
+        app.listen(PORT, () => {
+            console.log(`Servidor rodando na porta ${PORT}`);
+        });
+
+    } catch (error) {
+
+        console.error("Erro ao iniciar o servidor:");
+        console.error(error);
+
+        process.exit(1);
+
+    }
+
+}
+
+startServer();
