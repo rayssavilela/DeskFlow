@@ -3,9 +3,17 @@ require("dotenv").config();
 
 const initializeSystem = require("./src/startup/initializeSystem");
 
+const authRouter = require("./src/routes/authRouter");
+const usuarioRouter = require("./src/routes/usuarioRouter");
+
 const app = express();
 
+// Middlewares
 app.use(express.json());
+
+// Rotas
+app.use("/auth", authRouter);
+app.use("/usuarios", usuarioRouter);
 
 const PORT = process.env.PORT || 3000;
 

@@ -132,6 +132,45 @@ class UsuarioRepository {
 
     }
 
+    async buscarPorLogin(login) {
+
+        const connection = await db.getConnection();
+
+        try {
+
+            const result = await connection.execute(
+                `
+                SELECT
+                    U.ID,
+                    U.NOME,
+                    U.LOGIN,
+                    U.SENHA,
+                    P.NOME AS PERFIL
+                FROM USUARIO U
+                INNER JOIN PERFIL P
+                    ON P.ID = U.ID_PERFIL
+                WHERE U.LOGIN = :login
+                AND U.ATIVO = 'S'
+                `,
+                { login },
+                {
+                    outFormat: oracledb.OUT_FORMAT_OBJECT
+                }
+            );
+
+            if (result.rows.length === 0) {
+                return null;
+            }
+
+            return result.rows[0];
+
+        } finally {
+
+            await connection.close();
+
+        }
+
+    }
 }
 
 module.exports = new UsuarioRepository();
