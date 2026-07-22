@@ -132,8 +132,8 @@ Atualmente o projeto está sendo desenvolvido por etapas.
 - [x] Configuração do Node.js
 - [x] Configuração do Express
 - [x] Conexão com Oracle
+- [x] Autenticação JWT
 - [ ] CRUD de Usuários
-- [ ] Autenticação JWT
 - [ ] CRUD de Chamados
 - [ ] Dashboard
 - [ ] Upload de arquivos
